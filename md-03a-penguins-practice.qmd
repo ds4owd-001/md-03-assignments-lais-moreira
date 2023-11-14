@@ -1,7 +1,7 @@
 ---
 title: "Data transformation with dplyr"
 subtitle: "Practice with penguins"
-author: ""
+author: "Lais Moreira"
 format:
   html:
     embed-resources: true
@@ -28,6 +28,8 @@ All exercises in this assignment use the `penguins` data as a starting point.
 
 ```{r}
 glimpse(penguins)
+
+View(penguins)
 ```
 
 ## Task 1: Create a subset of the data using filter()
@@ -36,11 +38,16 @@ Use `filter()` to create a subset from `penguins` that only contains observation
 
 ```{r}
 
+penguins |> 
+  filter(species == "Gentoos")
 ```
 
 Use `filter()` to create a subset from `penguins` that only contains observations where body mass is less than or equal to 2900 g.
 
 ```{r}
+
+penguins |> 
+  filter(body_mass_g <= 2900)
 
 ```
 
@@ -48,42 +55,62 @@ Use `filter()` to create a subset from `penguins` that only contains observation
 
 ```{r}
 
+penguins |> 
+  filter(species == "Adelie", bill_length_mm > 40)
 ```
 
 Use `filter()` to create a subset from `penguins` that excludes observations for chinstraps.
 
 ```{r}
 
+penguins |> 
+  filter(species != "Chinstrap")
 ```
 
 Use `filter()` to create a subset from `penguins` that only contains gentoo penguins with a bill depth greater than or equal to 15.5 millimeters.
 
 ```{r}
 
+penguins |> 
+  filter(species == "Gentoo", bill_depth_mm >= 15.5) |> 
+  arrange(bill_depth_mm)
 ```
 
 Use `filter()` to create a subset from `penguins` that contains observations for male penguins recorded at Dream and Biscoe Islands.
 
 ```{r}
 
+penguins |> 
+  filter(sex == "male", island == c("Dream", "Biscoe"))
 ```
 
 Use `filter()` to create a subset from `penguins` that contains observations for female Adelie penguins with bill lengths less than 35 mm.
 
 ```{r}
 
+penguins |> 
+  filter(sex == "female", species == "Adelie", bill_length_mm < 35)
 ```
 
 Use `filter()` to create a subset from `penguins` containing observations for female chinstrap penguins on Dream and Torgersen Islands.
 
 ```{r}
 
+penguins |> 
+  filter(sex == "female", species == "Chinstrap", island == c("Dream", "Torgersen"))
 ```
 
 Use `filter()` to create a subset from `penguins` that contains penguins that are either gentoos OR have a body mass greater than 4500 g.
 
 ```{r}
 
+penguins |> 
+  filter(species == "Gentoo" | body_mass_g > 4500)
+
+#different from: (the comma works as an 'and')
+
+penguins |> 
+  filter(species == "Gentoo", body_mass_g > 4500)
 ```
 
 ## Task 2: Add new columns with mutate()
